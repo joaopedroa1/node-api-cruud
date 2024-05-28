@@ -20,4 +20,20 @@ app.get("/carros", (req,res) => {
     });
 });
 
+//Escrita 
+app.post("/carros",(req, res)=>{
+    const { modelo, marca } = req.body;
+    sql.query(
+        connectionString,
+        `INSERT INTO carro VALUES ('${modelo}', '${marca}')`,
+        (erro, rows) =>{
+            if(erro){
+                res.status(500).json("Internal Server error");
+            } else {
+                res.status(201).json("Cadastrado com sucesso")
+            }
+        }
+    );
+});
+
 app.listen(PORT, ()=> console.log(`Server Rodando na porta ${PORT}`));
